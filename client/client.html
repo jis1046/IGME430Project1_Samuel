@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Our simple HTTP server</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  
+  <script>
+    const handleResponse = async (response, parseResponse) => {
+      const content = document.querySelector('#content');
+
+      //status code
+      switch(response.status) {
+        case 200: //success
+        
+        content.innerHTML = `<b>Success</b>`;
+       const method = userForm.querySelector('#methodSelect').value;
+       if (method === 'get')
+        {
+        let users = await response.json();
+        content.innerHTML += JSON.stringify(users);
+        }
+       else
+        {
+          content.innerHTML = `<b>Success</b>`;
+        }
+
+        break;
+        case 201: //created
+        content.innerHTML = `<b>Created</b>`;
+        break;
+        case 204: //updated
+        content.innerHTML = `<b>Updated (No Content)</b>`;
+        break;
+        case 400: //bad request
+        content.innerHTML = `<b>Bad Request</b>`;
+        break;
+        case 404: //error 
+        content.innerHTML = `<b>Not Found</b>`;
+        break;
+      }
+
+      //if(parseResponse)
+      //{
+        let obj = await response.json();
+
+        let jsonString = JSON.stringify(obj);
+        content.innerHTML += `<p>${obj.message}</p>`;
+      //}
+      
+
+    };
+
+    const requestUpdate = async (userForm) => {
+      const url = userForm.querySelector('#urlField').value;
+      const method = userForm.querySelector('#methodSelect').value;
+
+      let response = await fetch(url, {
+        method, 
+        headers: {
+          'Accept': 'application/json'
+        },
+      });
+
+      handleResponse(response, method === 'get');
+    };
+
+    const sendPost = async (nameForm) => {
+      const nameAction = nameForm.getAttribute('action');
+      const nameMethod = nameForm.getAttribute('method');
+
+      const nameField = nameForm.querySelector('#nameField');
+      const dateField = nameForm.querySelector('#dateField');
+      const exerciseField = document.querySelector('#exerciseField');
+      const repsField = document.querySelector('#repsField');
+
+      //Build a data string in the FORM-URLENCODED format.
+      const formData = `name=${nameField.value}&date=${dateField.value}&exercise=${exerciseField.value}&reps=${repsField.value}`;
+
+      let response = await fetch(nameAction, {
+        method: nameMethod,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json',
+        },
+        body: formData,
+      });
+
+      handleResponse(response);
+    }
+
+    const init = () => {
+      const userForm = document.querySelector('#userForm');
+      const nameForm = document.querySelector('#nameForm');
+      
+       const getWorkouts = (e) => {
+        e.preventDefault();
+        requestUpdate(userForm);
+        return false;
+      }
+
+      const addWorkouts = (e) => {
+        e.preventDefault();
+        sendPost(nameForm);
+        return false;
+      }
+
+
+      //add event listener 
+      userForm.addEventListener('submit', getWorkouts);
+      nameForm.addEventListener('submit', addWorkouts);
+    };
+
+    window.onload = init;
+
+
+  </script>
+</head>
+<body>
+  <section id="top">
+    <h1>Workout Planner</h1>
+    <form id="nameForm" action="/addWorkout" method="post">
+      <label for="name">Name of Workout: </label>
+      <input id="nameField" type="text" name="name" />
+      <label for="date">Date(Optional): </label>
+      <input id="dateField" type="number" name="date" min="0" max="100" step="1"/>
+      <label for="exercise">Exercise: </label>
+      <textarea id="exerciseField" type="text" name="exercise"></textarea>
+      <label for="reps">Reps: </label>
+      <input id="repsField" type="number" name="reps" min="1" max="20"/>
+      <input type="submit" value="Add Workout" />
+    </form>
+    <form id="userForm" action="/getWorkouts" method="get">
+      <select id='urlField'>
+        <option value='/getWorkouts'>/getWorkouts</option>
+        <option value='/notReal'>/notReal</option>
+      </select>
+      <select id="methodSelect">
+        <option value="get">GET</option>
+        <option value="head">HEAD</option>
+      </select>
+      <input type="submit" value="Get User" />
+    </form>
+  </section>
+  <section id="content">
+  </section>
+</body>
+</html>
