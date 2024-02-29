@@ -8,6 +8,8 @@
     const handleResponse = async (response, parseResponse) => {
       const content = document.querySelector('#content');
 
+      
+
       //status code
       switch(response.status) {
         case 200: //success
@@ -16,8 +18,28 @@
        const method = userForm.querySelector('#methodSelect').value;
        if (method === 'get')
         {
-        let users = await response.json();
-        content.innerHTML += JSON.stringify(users);
+        let workouts = await response.json();
+        content.innerHTML += JSON.stringify(workouts);
+        //content.innerHTML += `Workout: ${nameField.value} Date: ${dateField.value} <br> Exercises: ${exerciseField.value} Reps: ${repsField.value}`;
+        const workoutList = Object.values(workouts);
+        let workoutSection = document.getElementById('#content');
+
+        workoutList.forEach(workout => {
+          let name = document.createElement('h1');
+          name = workout.name;
+          let exerciseDiv = document.createElement('div');
+
+          workout.exercises.forEach(exercise => 
+          {
+            let e = document.createElement('p');
+            e.innerText = exercise;
+            exerciseDiv.appendChild(e);
+          });
+
+          workoutSection.appendChild(name);
+          workoutSection.appendChild(exerciseDiv);
+        }); 
+        workoutSection.innerHTML;
         }
        else
         {
