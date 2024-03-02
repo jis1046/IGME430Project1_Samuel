@@ -15,13 +15,13 @@
       switch(response.status) {
         case 200: //success
         
-        content.innerHTML = `<b>Success</b>`;
+        content.innerHTML = '';
        const method = userForm.querySelector('#methodSelect').value;
        if (method === 'get')
         {
          
         console.log(obj.workouts);
-        content.innerHTML += JSON.stringify(obj.workouts);
+        //content.innerHTML += JSON.stringify(obj.workouts);
         /*const myObject = JSON.parse(workouts);
         console.log(myObject.name);*/ 
         //content.innerHTML += `Workout: ${nameField.value} Date: ${dateField.value} <br> Exercises: ${exerciseField.value} Reps: ${repsField.value}`;
@@ -42,12 +42,12 @@
           workout.exercises.forEach(exercise => 
           {
             let e = document.createElement('p');
-            let p = document.createElement('p');
-            e.innerText = "Exercise: " + exercise.exercise + exercise.reps;
-            p.innerText = exercise.reps;
+            //let p = document.createElement('p');
+            e.innerText = "Exercise: " + exercise.exercise + " Reps: " + exercise.reps;
+
             console.log(exercise);
             exerciseDiv.appendChild(e);
-            exerciseDiv.appendChild(p);
+           // exerciseDiv.appendChild(p);
           });          
           workoutSection.appendChild(name);
           workoutSection.appendChild(date);
@@ -63,13 +63,13 @@
 
         break;
         case 201: //created
-        content.innerHTML = `<b>Created</b>`;
+        content.innerHTML = `<b>Workout Created</b>`;
         break;
         case 204: //updated
         content.innerHTML = `<b>Updated (No Content)</b>`;
         break;
         case 400: //bad request
-        content.innerHTML = `<b>Bad Request</b>`;
+        content.innerHTML = `<b>Name, exercise, and reps are both required</b>`;
         break;
         case 404: //error 
         content.innerHTML = `<b>Not Found</b>`;
@@ -160,11 +160,12 @@
       <input id="nameField" type="text" name="name" />
       <label for="date">Date(Optional): </label>
       <input id="dateField" type="date" name="date" min="0" max="100" step="1"/>
+      <br>
       <label for="exercise">Exercise: </label>
       <textarea id="exerciseField" type="text" name="exercise"></textarea>
       <label for="reps">Reps: </label>
       <input id="repsField" type="number" name="reps" min="1" max="20"/>
-      <input type="submit" value="Add Workout" />
+      <input type="submit" value="Add Workout/Update Workout" />
     </form>
     <form id="userForm" action="/getWorkouts" method="get">
       <select id='urlField'>
@@ -175,7 +176,7 @@
         <option value="get">GET</option>
         <option value="head">HEAD</option>
       </select>
-      <input type="submit" value="Get User" />
+      <input type="submit" value="Show workouts" />
     </form>
   </section>
   <section id="content">

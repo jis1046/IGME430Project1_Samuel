@@ -20,12 +20,32 @@ html, body {
     text-align: center;
   }
 
-  #exerciseField {
-    height: 100px;
-    font-size: 2em;
-  }
 
-  #nameField, #dateField, #repsField{
+  #nameField, #dateField, #repsField, #exerciseField {
     font-size: 1.5em;
   }
+
+  #nameField {
+    margin-bottom: 20px;
+  }
+  
+  
+  #repsField{
+ margin-right: 10px;
+ margin-bottom: 5px;
+ 
+  }
+  
+  #exerciseField{
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+
+ label[for="date"]
+ {
+  margin-left: 5px;
+ }
+
+
+  
 
