@@ -9,7 +9,8 @@
       const content = document.querySelector('#content');
 
       
-
+      let obj;
+      obj = await response.json();
       //status code
       switch(response.status) {
         case 200: //success
@@ -18,16 +19,21 @@
        const method = userForm.querySelector('#methodSelect').value;
        if (method === 'get')
         {
-        let workouts = await response.json();
-        content.innerHTML += JSON.stringify(workouts);
+         
+        console.log(obj.workouts);
+        content.innerHTML += JSON.stringify(obj.workouts);
+        /*const myObject = JSON.parse(workouts);
+        console.log(myObject.name);*/ 
         //content.innerHTML += `Workout: ${nameField.value} Date: ${dateField.value} <br> Exercises: ${exerciseField.value} Reps: ${repsField.value}`;
-        const workoutList = Object.values(workouts);
+        const workoutList = Object.values(obj.workouts);
         let workoutSection = document.getElementById('content');
         console.log(workoutList);
         workoutList.forEach(workout => {
           console.log("workout " + workout );
           let name = document.createElement('h1');
+          let date = document.createElement('h4');
           name.innerText = workout.name;
+          date.innerText = workout.date;
           console.log("name:" + name);
           let exerciseDiv = document.createElement('div');
 
@@ -36,14 +42,19 @@
           workout.exercises.forEach(exercise => 
           {
             let e = document.createElement('p');
-            e.innerText = exercise;
+            let p = document.createElement('p');
+            e.innerText = "Exercise: " + exercise.exercise + exercise.reps;
+            p.innerText = exercise.reps;
+            console.log(exercise);
             exerciseDiv.appendChild(e);
-          });
-          
+            exerciseDiv.appendChild(p);
+          });          
           workoutSection.appendChild(name);
+          workoutSection.appendChild(date);
           workoutSection.appendChild(exerciseDiv);
         }); 
-        workoutSection.innerHTML;
+
+        //workoutSection.innerHTML;
         }
        else
         {
@@ -67,7 +78,7 @@
 
       //if(parseResponse)
       //{
-        let obj = await response.json();
+         obj = await response.json();
 
         let jsonString = JSON.stringify(obj);
         content.innerHTML += `<p>${obj.message}</p>`;

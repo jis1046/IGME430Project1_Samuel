@@ -25,7 +25,7 @@ const respondJSONMeta = (request, response, status) => {
 
 const getWorkouts = (request, response) => {
   const responseJSON = {
-    workouts: Object.values(workouts),
+    workouts,
   };
 
   return respondJSON(request, response, 200, responseJSON);
