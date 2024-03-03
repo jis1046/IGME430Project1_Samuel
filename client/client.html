@@ -41,9 +41,11 @@
           let exerciseDiv = document.createElement('div');
           exerciseDiv.id = 'exerciseDiv';
 
+          
+
           //console.log(exercise);
           
-          workout.exercises.forEach(exercise => 
+          workout.exercises.forEach((exercise, index) => 
           {
             let e = document.createElement('p');
             //let p = document.createElement('p');
@@ -152,6 +154,7 @@
         showButton.disabled = false;
         return false;
       }
+
       //add event listener 
       userForm.addEventListener('submit', getWorkouts);
       nameForm.addEventListener('submit', addWorkouts);
@@ -163,6 +166,7 @@
   </script>
 </head>
 <body>
+  <div class="wrapper">
   <div class="left-column has-background-success"></div>
   <section id="top">
     <h1>Workout Planner</h1>
@@ -200,5 +204,6 @@
   </footer>
 
   <div class="right-column has-background-success"></div>
+  </div>
 </body>
 </html>

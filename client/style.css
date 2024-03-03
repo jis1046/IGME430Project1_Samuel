@@ -96,3 +96,54 @@ html, body {
   bottom: 0;
   right: 0;
 }
+
+@media only screen and (max-width: 600px)
+{
+  .left-column
+  {
+   display: none; 
+  }
+
+  .right-column
+  {
+    display: none; 
+   }
+
+   label[for="date"]
+   {
+    text-align: left;
+   } 
+ 
+
+ #dateField
+ {
+    padding-right: 100px;
+    margin-right: 8px;
+ }
+
+ label[for="exercise"]
+ {
+  margin-left: 15px;
+ }
+
+ #exerciseField{
+  padding-right: 117px;
+ 
+ }
+
+ label[for="reps"]
+ {
+  margin-left: 15px;
+ }
+
+ #repsField{
+  padding-right: 230px;
+  margin-left: 20px;
+ }
+
+}
+
+
+   
+
+}
