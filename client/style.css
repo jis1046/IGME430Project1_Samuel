@@ -1,3 +1,5 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
+
 html, body {
     height: 100%;
     width: 100%;
@@ -46,6 +48,51 @@ html, body {
   margin-left: 5px;
  }
 
+ #exerciseDiv{
+  /*background-color: aqua;*/
+  margin-left: 100px;
+  margin-right: 100px;
+ 
+ }
 
-  
+ #date{
+  /*background-color: green;*/
+  margin-left: 100px;
+  margin-right: 100px;
+  /*color: white;*/
+ }
 
+ #name{
+  font-weight: bold;
+ }
+
+ #addUpdateButton, #showButton{
+  margin-top: 10px;
+ }
+
+ footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.left-column,
+.right-column {
+  width: 20%; /* Adjust the width as needed */
+  /*background-color: aqua;*/
+}
+
+.left-column {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.right-column {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}

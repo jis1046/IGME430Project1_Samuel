@@ -3,11 +3,11 @@
 <head>
   <title>Our simple HTTP server</title>
   <link rel="stylesheet" type="text/css" href="/style.css">
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <script>
     const handleResponse = async (response, parseResponse) => {
       const content = document.querySelector('#content');
-
+      const showButton = document.querySelector('#showButton');
       
       let obj;
       obj = await response.json();
@@ -27,15 +27,19 @@
         //content.innerHTML += `Workout: ${nameField.value} Date: ${dateField.value} <br> Exercises: ${exerciseField.value} Reps: ${repsField.value}`;
         const workoutList = Object.values(obj.workouts);
         let workoutSection = document.getElementById('content');
+        
         console.log(workoutList);
         workoutList.forEach(workout => {
           console.log("workout " + workout );
           let name = document.createElement('h1');
+          name.id = 'name';
           let date = document.createElement('h4');
+          date.id = 'date';
           name.innerText = workout.name;
           date.innerText = workout.date;
           console.log("name:" + name);
           let exerciseDiv = document.createElement('div');
+          exerciseDiv.id = 'exerciseDiv';
 
           //console.log(exercise);
           
@@ -43,22 +47,26 @@
           {
             let e = document.createElement('p');
             //let p = document.createElement('p');
-            e.innerText = "Exercise: " + exercise.exercise + " Reps: " + exercise.reps;
+            e.innerText = exercise.exercise + " Reps: " + exercise.reps;
 
             console.log(exercise);
             exerciseDiv.appendChild(e);
            // exerciseDiv.appendChild(p);
-          });          
+          });   
+          
+          
           workoutSection.appendChild(name);
           workoutSection.appendChild(date);
           workoutSection.appendChild(exerciseDiv);
         }); 
-
+        
+        showButton.disabled = false;
         //workoutSection.innerHTML;
         }
        else
         {
           content.innerHTML = `<b>Success</b>`;
+          showButton.disabled = false;
         }
 
         break;
@@ -70,6 +78,7 @@
         break;
         case 400: //bad request
         content.innerHTML = `<b>Name, exercise, and reps are both required</b>`;
+        showButton.disabled = true;
         break;
         case 404: //error 
         content.innerHTML = `<b>Not Found</b>`;
@@ -128,6 +137,8 @@
     const init = () => {
       const userForm = document.querySelector('#userForm');
       const nameForm = document.querySelector('#nameForm');
+      const showButton = document.querySelector('#showButton');
+      showButton.disabled = true;
       
        const getWorkouts = (e) => {
         e.preventDefault();
@@ -138,21 +149,21 @@
       const addWorkouts = (e) => {
         e.preventDefault();
         sendPost(nameForm);
+        showButton.disabled = false;
         return false;
       }
-
-
       //add event listener 
       userForm.addEventListener('submit', getWorkouts);
       nameForm.addEventListener('submit', addWorkouts);
     };
-
+    
     window.onload = init;
 
 
   </script>
 </head>
 <body>
+  <div class="left-column has-background-success"></div>
   <section id="top">
     <h1>Workout Planner</h1>
     <form id="nameForm" action="/addWorkout" method="post">
@@ -165,9 +176,10 @@
       <textarea id="exerciseField" type="text" name="exercise"></textarea>
       <label for="reps">Reps: </label>
       <input id="repsField" type="number" name="reps" min="1" max="20"/>
-      <input type="submit" value="Add Workout/Update Workout" />
+      <br>
+      <input type="submit" id="addUpdateButton" class="button is-success" value="Add Workout/Update Workout" />
     </form>
-    <form id="userForm" action="/getWorkouts" method="get">
+    <form id="userForm" action="/getWorkouts" method="get" class="py-2">
       <select id='urlField'>
         <option value='/getWorkouts'>/getWorkouts</option>
         <option value='/notReal'>/notReal</option>
@@ -175,11 +187,18 @@
       <select id="methodSelect">
         <option value="get">GET</option>
         <option value="head">HEAD</option>
-      </select>
-      <input type="submit" value="Show workouts" />
+      </select> 
+      <br>
+      <input type="submit" id="showButton" class="button is-success" value="Show workouts" method="get"/>
     </form>
   </section>
-  <section id="content">
+  <section id="content" class="message is-success">
   </section>
+  
+  <footer class="has-text-centered">
+      IGME 430 Project 1 Josh Samuel  
+  </footer>
+
+  <div class="right-column has-background-success"></div>
 </body>
 </html>
