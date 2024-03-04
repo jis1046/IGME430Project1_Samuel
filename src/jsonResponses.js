@@ -112,7 +112,6 @@ else {
   return respondJSONMeta(request, response, responseCode);
 };
 
-
 const notFound = (request, response) => {
   // create error message for response
   const responseJSON = {
