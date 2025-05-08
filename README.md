@@ -1,6 +1,6 @@
 Dowload or git clone repositiory. 
 
-Open terminal and go reositiory location
+Open terminal and go repositiory location
 
 Install NPM in terminal
 
